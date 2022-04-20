@@ -1,0 +1,10 @@
+.todo{
+    display:flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+.TodoList{
+    width: 400px;
+    margin:10px;
+    background-color: #eee;
+}
