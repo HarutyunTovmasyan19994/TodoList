@@ -21,6 +21,8 @@ export const reducer = (state = defaultState, action: iAction) => {
             return  {...state,user:state.user.filter(user => user.id !== action.payload)}
         case "SORT_USER":
             return  {...state,user: action.payload}
+        case "SYNC_TODOS":
+            return  {...state,user: action.payload, EditTable: false}
         case "DEFAULT_REDUX":
             return defaultState
         case "EDIT_USER":

@@ -7,5 +7,6 @@ export interface iAction {
 export interface iUserData {
     name:string,
     email:string,
-    id:number
+    id:number,
+    status?:string
 }
