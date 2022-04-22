@@ -14,7 +14,6 @@ export interface IUserVal {
     email: string,
     id?: number,
     status: string
-
 }
 
 
@@ -30,7 +29,7 @@ const Form: FC = () => {
         const {name, value} = event.target
         setTodo({...todo, [name]: value})
     }
-    const status ="green"
+    const status = "green"
     const DispatchFunction = () => {
         let reg1 = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
         if (reg1.test(todo.email) && todo.name !== "") {
@@ -43,7 +42,7 @@ const Form: FC = () => {
                 })
                 dispatch({type: "SYNC_TODOS", payload: editTodo})
             } else {
-                dispatch({type: "ADD_TODO", payload: {...todo, id: new Date().getTime(),status}})
+                dispatch({type: "ADD_TODO", payload: {...todo, id: new Date().getTime(), status}})
             }
         } else if (todo.name === "") {
             alert("Name Error")
@@ -51,6 +50,10 @@ const Form: FC = () => {
             alert("Email Error")
         }
         setTodo({name: "", email: ""})
+    }
+    const filterTodoList = (event: ChangeEvent<HTMLSelectElement>) => {
+        const bColor = event.target.value
+       dispatch({type:"SEND_COLOR",payload:bColor})
     }
     return (
         <>
@@ -66,6 +69,12 @@ const Form: FC = () => {
                         {todo.id ? <UpgradeIcon/> : <SendIcon/>}</Button>
                     <Button variant="outlined" color="error"
                             onClick={() => dispatch({type: "DEFAULT_REDUX"})}><RefreshIcon/></Button>
+                    <select onChange={(event) => filterTodoList(event)}>
+                        <option value="">---</option>
+                        <option value="green">Green</option>
+                        <option value="red">Red</option>
+                        <option value="yellow">Yellow</option>
+                    </select>
                 </form>
             </Box>
         </>

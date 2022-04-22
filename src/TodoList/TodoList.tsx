@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from 'react'
+import React, {ChangeEvent, FC, useEffect} from 'react'
 import {useSelector, useDispatch} from "react-redux";
 import {iRootReducer} from "../Redux/Rudecer";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,6 +13,7 @@ import './TodoList.css'
 const TodoList: FC = () => {
     const dispatch = useDispatch()
     const selector = useSelector((state: iRootReducer) => state.user.user)
+    const bColor = useSelector((state: iRootReducer) => state.bColor.bColor)
     const arrayMoveUpDown = (key: number, click: string) => {
         const index = selector.findIndex(item => item.id === key)
         let newIndex = index;
@@ -39,6 +40,14 @@ const TodoList: FC = () => {
         })
         dispatch({type: "SYNC_TODOS", payload: changeColor})
     }
+    useEffect(()=>{
+        const FilterTodos = selector.filter(item=>{
+            if(item.status === bColor){
+                return item
+            }
+        })
+        dispatch({type:"COLOR_TODO",payload:FilterTodos})
+    },[bColor])
     return (
         <Box className="todo">
             <Box>
