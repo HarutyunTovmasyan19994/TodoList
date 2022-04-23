@@ -11,12 +11,11 @@ export interface iTodo {
 const defaultState: iTodo = {
     user: [],
     EditTable: false,
-    bColor:""
+    bColor:"all"
 }
 
 
 export const reducer = (state = defaultState, action: iAction) => {
-    console.log(state)
     switch (action.type) {
         case "ADD_TODO":
             return {...state, user: [...state.user,action.payload]}

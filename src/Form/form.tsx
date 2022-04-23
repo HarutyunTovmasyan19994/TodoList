@@ -21,7 +21,7 @@ const Form: FC = () => {
     const [todo, setTodo] = useState<any>({name: '', email: ""})
     const dispatch = useDispatch()
     const selector = useSelector((state: iRootReducer) => state.user.user)
-    const NameEmail = useSelector((title: iRootReducer) => title.EditTable.EditTable)
+    const NameEmail = useSelector((title: iRootReducer) => title.user.EditTable)
     useEffect(() => {
         setTodo(NameEmail)
     }, [NameEmail])
@@ -70,7 +70,7 @@ const Form: FC = () => {
                     <Button variant="outlined" color="error"
                             onClick={() => dispatch({type: "DEFAULT_REDUX"})}><RefreshIcon/></Button>
                     <select onChange={(event) => filterTodoList(event)}>
-                        <option value="">---</option>
+                        <option value="all">---</option>
                         <option value="green">Green</option>
                         <option value="red">Red</option>
                         <option value="yellow">Yellow</option>

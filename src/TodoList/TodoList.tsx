@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useEffect} from 'react'
+import React, {ChangeEvent, FC, useState} from 'react'
 import {useSelector, useDispatch} from "react-redux";
 import {iRootReducer} from "../Redux/Rudecer";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,13 +7,16 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import './TodoList.css'
 
 
 const TodoList: FC = () => {
+    const [add, setAdd] = useState(1)
+    const [page, setPage] = useState()
     const dispatch = useDispatch()
     const selector = useSelector((state: iRootReducer) => state.user.user)
-    const bColor = useSelector((state: iRootReducer) => state.bColor.bColor)
+    const bColor = useSelector((state: iRootReducer) => state.user.bColor)
     const arrayMoveUpDown = (key: number, click: string) => {
         const index = selector.findIndex(item => item.id === key)
         let newIndex = index;
@@ -40,42 +43,52 @@ const TodoList: FC = () => {
         })
         dispatch({type: "SYNC_TODOS", payload: changeColor})
     }
-    useEffect(()=>{
-        const FilterTodos = selector.filter(item=>{
-            if(item.status === bColor){
-                return item
-            }
-        })
-        dispatch({type:"COLOR_TODO",payload:FilterTodos})
-    },[bColor])
     return (
         <Box className="todo">
             <Box>
                 {
-                    selector.map((item, index) => item &&
-                        <Box className="TodoList" key={item.id} bgcolor={item.status}>
-                            <p> Name: {item.name}</p>
-                            <p> Email: {item.email}</p>
-                            <Button variant="outlined" onClick={() => dispatch({
-                                type: "CUT_TODO",
-                                payload: item.id
-                            })}><DeleteIcon/></Button>
-                            <Button onClick={() => arrayMoveUpDown(item.id, "up")}
-                                    disabled={index === 0}><KeyboardArrowUpIcon/></Button>
-                            <Button onClick={() => arrayMoveUpDown(item.id, "down")}
-                                    disabled={index === selector.length - 1}><KeyboardArrowDownIcon/></Button>
-                            <Button onClick={() => {
-                                dispatch({type: "EDIT_USER", payload: item});
-                            }}><EditIcon/></Button>
-                            <Button onClick={() => doubleTodo(item)}><AddIcon/></Button>
-                            <select onChange={(e) => changeColor(e, item)}>
-                                <option value="green">Green</option>
-                                <option value="red">Red</option>
-                                <option value="yellow">Yellow</option>
-                            </select>
-                        </Box>
-                    )}
+                    selector.filter(item => {
+                        if (item.status === bColor) {
+                            return item
+                        } else if (bColor === 'all') {
+                            return item
+                        }
+
+                    }).map((item, index) => item &&
+                        <>
+
+                            <Box className="TodoList" key={item.id} bgcolor={item.status}>
+                                <p> Name: {item.name}</p>
+                                <p> Email: {item.email}</p>
+                                <Button variant="outlined" onClick={() => dispatch({
+                                    type: "CUT_TODO",
+                                    payload: item.id
+                                })}><DeleteIcon/></Button>
+                                <Button onClick={() => arrayMoveUpDown(item.id, "up")}
+                                        disabled={index === 0}><KeyboardArrowUpIcon/></Button>
+                                <Button onClick={() => arrayMoveUpDown(item.id, "down")}
+                                        disabled={index === selector.length - 1}><KeyboardArrowDownIcon/></Button>
+                                <Button onClick={() => {
+                                    dispatch({type: "EDIT_USER", payload: item});
+                                }}><EditIcon/></Button>
+                                <Button onClick={() => doubleTodo(item)}><AddIcon/></Button>
+                                <select onChange={(e) => changeColor(e, item)}>
+                                    <option value="green">Green</option>
+                                    <option value="red">Red</option>
+                                    <option value="yellow">Yellow</option>
+                                </select>
+                            </Box>
+                        </>
+                    ).slice(0, add)
+                }
             </Box>
+            {
+                <Button onClick={() => setAdd(prev => prev + 1)}
+                        disabled={selector.length === 0 || selector.length === add}><GroupAddIcon/></Button>
+            }
+            {
+
+            }
         </Box>
     )
 }
