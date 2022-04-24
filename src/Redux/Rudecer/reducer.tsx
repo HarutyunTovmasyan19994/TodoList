@@ -1,4 +1,3 @@
-import React from 'react'
 import {iAction, iUserData} from "../../interface";
 import {IUserVal} from "../../Form/form";
 

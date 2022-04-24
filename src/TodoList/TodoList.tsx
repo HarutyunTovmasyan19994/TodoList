@@ -13,7 +13,6 @@ import './TodoList.css'
 
 const TodoList: FC = () => {
     const [add, setAdd] = useState(1)
-    const [page, setPage] = useState()
     const dispatch = useDispatch()
     const selector = useSelector((state: iRootReducer) => state.user.user)
     const bColor = useSelector((state: iRootReducer) => state.user.bColor)
@@ -56,7 +55,6 @@ const TodoList: FC = () => {
 
                     }).map((item, index) => item &&
                         <>
-
                             <Box className="TodoList" key={item.id} bgcolor={item.status}>
                                 <p> Name: {item.name}</p>
                                 <p> Email: {item.email}</p>
