@@ -10,7 +10,7 @@ export interface iTodo {
 const defaultState: iTodo = {
     user: [],
     EditTable: false,
-    bColor:"all"
+    bColor:""
 }
 
 

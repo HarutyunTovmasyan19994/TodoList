@@ -12,7 +12,9 @@ import './TodoList.css'
 
 
 const TodoList: FC = () => {
-    const [add, setAdd] = useState(1)
+//     const [add, setAdd] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [todoPage, setTodoPage] = useState(2)
     const dispatch = useDispatch()
     const selector = useSelector((state: iRootReducer) => state.user.user)
     const bColor = useSelector((state: iRootReducer) => state.user.bColor)
@@ -42,16 +44,26 @@ const TodoList: FC = () => {
         })
         dispatch({type: "SYNC_TODOS", payload: changeColor})
     }
+    const pagination = []
+    const TodoListLength = selector.length
+    const pageLast = currentPage * todoPage;
+    const pageFirst = pageLast - todoPage;
+    const currentPages = selector.slice(pageFirst, pageLast);
+    for (let i = 1; i<= Math.ceil(TodoListLength / todoPage); i++){
+        pagination.push(i)
+    }
+
     return (
         <Box className="todo">
             <Box>
                 {
-                    selector.filter(item => {
-                        if (item.status === bColor) {
-                            return item
+                    currentPages.filter(items => {
+                        if (items.status === bColor) {
+                            return items
                         } else if (bColor === 'all') {
-                            return item
+                            return items
                         }
+                        return items
 
                     }).map((item, index) => item &&
                         <>
@@ -77,15 +89,23 @@ const TodoList: FC = () => {
                                 </select>
                             </Box>
                         </>
-                    ).slice(0, add)
+                    )
                 }
             </Box>
+            {/*{*/}
+            {/*    <Button onClick={() => setAdd(prev => prev + 1)}*/}
+            {/*            disabled={selector.length === 0 || selector.length === add}><GroupAddIcon/></Button>*/}
+            {/*}*/}
             {
-                <Button onClick={() => setAdd(prev => prev + 1)}
-                        disabled={selector.length === 0 || selector.length === add}><GroupAddIcon/></Button>
-            }
-            {
-
+            <Box>
+                <ul className ="ul">
+                    {pagination.map(number =>
+                    <li key={number}>
+                        <a href="#" onClick={()=>setCurrentPage(number)}>{number}</a>
+                    </li>
+                    )}
+                </ul>
+            </Box>
             }
         </Box>
     )

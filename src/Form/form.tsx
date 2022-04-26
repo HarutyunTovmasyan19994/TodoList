@@ -14,7 +14,6 @@ export interface IUserVal {
     email: string,
     id?: number,
     status: string
-    NameEmail?: string
 }
 
 
@@ -54,14 +53,15 @@ const Form: FC = () => {
     }
     const filterTodoList = (event: ChangeEvent<HTMLSelectElement>) => {
         const bColor = event.target.value
-        dispatch({type: "SEND_COLOR", payload: bColor})
+       dispatch({type:"SEND_COLOR",payload:bColor})
     }
+    console.log(selector)
+
     return (
         <>
             <Box className='form'>
                 <form>
-                    <TextField id="standard-basic" label="Name" variant="standard" onChange={textChange} type="text"
-                               name='name'
+                    <TextField id="standard-basic" label="Name" variant="standard" onChange={textChange} name='name'
                                value={todo.name}/>
                     <TextField id="standard-basic" label="Email" variant="standard" onChange={textChange}
                                type="email"
