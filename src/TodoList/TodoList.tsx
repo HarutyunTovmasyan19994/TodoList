@@ -8,16 +8,22 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import TextField from '@mui/material/TextField';
 import './TodoList.css'
 
 
 const TodoList: FC = () => {
-//     const [add, setAdd] = useState(1)
+    const [number,setNumber] = useState<number>()
+    const [add, setAdd] = useState(1)
     const [currentPage, setCurrentPage] = useState(1)
     const [todoPage, setTodoPage] = useState(2)
     const dispatch = useDispatch()
     const selector = useSelector((state: iRootReducer) => state.user.user)
     const bColor = useSelector((state: iRootReducer) => state.user.bColor)
+    const choseNumber = (event: ChangeEvent<HTMLInputElement>) => {
+        setNumber(Number(event.target.value))
+
+    }
     const arrayMoveUpDown = (key: number, click: string) => {
         const index = selector.findIndex(item => item.id === key)
         let newIndex = index;
@@ -49,9 +55,13 @@ const TodoList: FC = () => {
     const pageLast = currentPage * todoPage;
     const pageFirst = pageLast - todoPage;
     const currentPages = selector.slice(pageFirst, pageLast);
-    for (let i = 1; i<= Math.ceil(TodoListLength / todoPage); i++){
+    for (let i = 1; i <= Math.ceil(TodoListLength / todoPage); i++) {
         pagination.push(i)
     }
+    const sendNumber =()=>{
+        setTodoPage(Number(number))
+    }
+    console.log(number)
 
     return (
         <Box className="todo">
@@ -89,23 +99,25 @@ const TodoList: FC = () => {
                                 </select>
                             </Box>
                         </>
-                    )
+                    ).slice(0, add)
                 }
             </Box>
-            {/*{*/}
-            {/*    <Button onClick={() => setAdd(prev => prev + 1)}*/}
-            {/*            disabled={selector.length === 0 || selector.length === add}><GroupAddIcon/></Button>*/}
-            {/*}*/}
             {
-            <Box>
-                <ul className ="ul">
-                    {pagination.map(number =>
-                    <li key={number}>
-                        <a href="#" onClick={()=>setCurrentPage(number)}>{number}</a>
-                    </li>
-                    )}
-                </ul>
-            </Box>
+                <Button onClick={() => setAdd(prev => prev + 1)}
+                        disabled={selector.length === 0 || selector.length === add}><GroupAddIcon/></Button>
+            }
+            {
+                <Box>
+                    <ul className="ul">
+                        {pagination.map(number =>
+                            <li key={number}>
+                                <a href="#" onClick={() => setCurrentPage(number)}>{number}</a>
+                            </li>
+                        )}
+                    </ul>
+                    <TextField label="Number" type="number" onChange={choseNumber}/>
+                    <button type="submit" onClick={()=>sendNumber()}>Click</button>
+                </Box>
             }
         </Box>
     )

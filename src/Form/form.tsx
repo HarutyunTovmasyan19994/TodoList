@@ -53,9 +53,8 @@ const Form: FC = () => {
     }
     const filterTodoList = (event: ChangeEvent<HTMLSelectElement>) => {
         const bColor = event.target.value
-       dispatch({type:"SEND_COLOR",payload:bColor})
+        dispatch({type: "SEND_COLOR", payload: bColor})
     }
-    console.log(selector)
 
     return (
         <>
@@ -66,7 +65,7 @@ const Form: FC = () => {
                     <TextField id="standard-basic" label="Email" variant="standard" onChange={textChange}
                                type="email"
                                name="email" value={todo.email}/>
-                    <Button variant="contained" disabled={selector.length >= 5}
+                    <Button variant="contained"
                             onClick={DispatchFunction}>
                         {todo.id ? <UpgradeIcon/> : <SendIcon/>}</Button>
                     <Button variant="outlined" color="error"
