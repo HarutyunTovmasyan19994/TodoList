@@ -5,3 +5,15 @@
     justify-content: center;
     align-items: center;
 }
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+.buttons p{
+    margin: 10px;
+
+}
+.link{
+    text-decoration: none;
+    color: black;
+}
