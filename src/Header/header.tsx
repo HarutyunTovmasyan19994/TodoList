@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import './header.css'
 
-const Header: FC = () => {
+export const Header: FC = () => {
     return (
         <Box className="header">
             <Typography variant='h1'>Todo List</Typography>
@@ -23,4 +23,3 @@ const Header: FC = () => {
     )
 }
 
-export default Header
