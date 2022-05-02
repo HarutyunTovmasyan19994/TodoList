@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import './header.css'
 
-export const Header: FC = () => {
+ const Header: FC = () => {
     return (
         <Box className="header">
             <Typography variant='h1'>Todo List</Typography>
@@ -18,8 +18,12 @@ export const Header: FC = () => {
                 <p>
                     <Link to='/todolist' className='link'>TodoList</Link>
                 </p>
+                <p>
+                    <Link to='/slide_img' className='link'>Pictures</Link>
+                </p>
             </Box>
         </Box>
     )
 }
 
+export default Header
